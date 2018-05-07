@@ -130,6 +130,7 @@ int lab2_node_remove(lab2_tree *tree, int key) {
     lab2_node * child = tree -> root; //Fugitive
     lab2_node * parent = NULL; //Chaser
 
+
     //Find node that has same key
     while(child && child-> key != key){
         parent = child;
