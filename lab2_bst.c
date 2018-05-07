@@ -39,6 +39,7 @@ int lab2_node_print_inorder(lab2_tree *tree) {
         inorder(root);
         return true;
     }
+
 }
 
 void inorder(lab2_node * currentNode){
