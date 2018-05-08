@@ -278,53 +278,54 @@ int lab2_node_remove_fg(lab2_tree *tree, int key) {
         return false;
     }
     struct timespec etime;
-    pthread_mutex_lock(&tree -> root -> mutex);
-    lab2_node * child = tree -> root; //Fugitive
-    pthread_mutex_unlock(&tree -> root -> mutex);
-    
-    lab2_node * parent = NULL; //Chaser
-
-    //Find node that has same key
-    for(pthread_mutex_lock(&child -> mutex); child && child-> key != key;){
-        parent = child;
-        if(key > child -> key){
-            if(child -> right != NULL){
-                clock_gettime(CLOCK_REALTIME, &etime);
-                etime.tv_sec += 2;
-                if(pthread_mutex_timedlock(&child -> right -> mutex, &etime) == ETIMEDOUT){
-                    pthread_mutex_unlock(&child -> mutex);
-                    pthread_mutex_lock(&child -> right -> mutex);
-                    child = child -> right;
-                    printf("1\n");
-                }else{
-                    child = child -> right;
-                    pthread_mutex_unlock(&parent -> mutex);
-                }
-            }else{
-                pthread_mutex_unlock(&child -> mutex);
-                child = NULL;
-                break;
-            }
-        }else if(key < child -> key){
-            if(child -> left != NULL){
-                clock_gettime(CLOCK_REALTIME, &etime);
-                etime.tv_sec += 2;
-                if(pthread_mutex_timedlock(&child -> left -> mutex, &etime) == ETIMEDOUT){
-                    pthread_mutex_unlock(&child -> mutex);
-                    pthread_mutex_unlock(&child -> left -> mutex);
-                    child = child -> left;
-                    printf("2\n");
-                }else{
-                    child = child -> left;
-                    pthread_mutex_unlock(&parent -> mutex);
-                }
-            }else{
-                pthread_mutex_unlock(&child -> mutex);
-                child = NULL;
-                break;
-            }
-        }
-    }
+//    pthread_mutex_lock(&tree -> root -> mutex);
+//    lab2_node * child = tree -> root; //Fugitive
+//    pthread_mutex_unlock(&tree -> root -> mutex);
+//    
+//    lab2_node * parent = NULL; //Chaser
+//
+//    //Find node that has same key
+//    for(pthread_mutex_lock(&child -> mutex); child && child-> key != key;){
+//        parent = child;
+//        if(key > child -> key){
+//            if(child -> right != NULL){
+//                clock_gettime(CLOCK_REALTIME, &etime);
+//                etime.tv_sec += 2;
+//                if(pthread_mutex_timedlock(&child -> right -> mutex, &etime) == ETIMEDOUT){
+//                    pthread_mutex_unlock(&child -> mutex);
+//                    pthread_mutex_lock(&child -> right -> mutex);
+//                    child = child -> right;
+//                    printf("1\n");
+//                }else{
+//                    child = child -> right;
+//                    pthread_mutex_unlock(&parent -> mutex);
+//                }
+//            }else{
+//                pthread_mutex_unlock(&child -> mutex);
+//                child = NULL;
+//                break;
+//            }
+//        }else if(key < child -> key){
+//            if(child -> left != NULL){
+//                clock_gettime(CLOCK_REALTIME, &etime);
+//                etime.tv_sec += 2;
+//                if(pthread_mutex_timedlock(&child -> left -> mutex, &etime) == ETIMEDOUT){
+//                    pthread_mutex_unlock(&child -> mutex);
+//                    pthread_mutex_unlock(&child -> left -> mutex);
+//                    child = child -> left;
+//                    printf("2\n");
+//                }else{
+//                    child = child -> left;
+//                    pthread_mutex_unlock(&parent -> mutex);
+//                }
+//            }else{
+//                pthread_mutex_unlock(&child -> mutex);
+//                child = NULL;
+//                break;
+//            }
+//        }
+//    }
+//
 
     //No such key
     if(child == NULL){
