@@ -241,7 +241,10 @@ lab2_node *lab2_node_search_fg(lab2_tree *tree, int key){
 lab2_node *lab2_node_search_cg(lab2_tree *tree, int key){
 	pthread_mutex_lock(&c_lock);
 	for(lab2_node *t = tree->root; t; ){
-		if(key == t->key) return t;
+		if(key == t->key){
+			pthread_mutex_unlock(&c_lock);
+			return t;
+		}
 		if(key < t->key) t = t->left;
 		else t = t->right;
 	}
@@ -258,13 +261,16 @@ lab2_node *lab2_node_search_cg(lab2_tree *tree, int key){
  *  @param lab2_tree *tree  : bst which you want to delete. 
  *  @return                 : status(success or fail)
  */
-void lab2_tree_delete(lab2_tree *tree) {
+void lab2_tree_delete(lab2_tree *tree, lab2_node *current) {
     // You need to implement lab2_tree_delete function.
-	if(tree->root){
-		printf("Tree is not empty\n");
-//		return;
+	if(current){
+//		printf("Tree is not empty\n");
+		lab2_tree_delete(tree, current->left);
+		lab2_tree_delete(tree, current->right);
+		lab2_node_delete(current);
 	}
-	free(tree);
+	else return;
+	if(tree->root == current) free(tree);
 }
 
 /*

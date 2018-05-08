@@ -76,7 +76,7 @@ int lab2_node_remove_cg(lab2_tree *tree, int key);
 lab2_node *lab2_node_search(lab2_tree *tree, int key);
 lab2_node *lab2_node_search_fg(lab2_tree *tree, int key);
 lab2_node *lab2_node_search_cg(lab2_tree *tree, int key);
-void lab2_tree_delete(lab2_tree *tree);
+void lab2_tree_delete(lab2_tree *tree, lab2_node *current);
 void lab2_node_delete(lab2_node *node);
 
 
