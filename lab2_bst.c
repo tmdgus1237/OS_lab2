@@ -342,6 +342,7 @@ int lab2_node_remove_fg(lab2_tree *tree, int key) {
             clock_gettime(CLOCK_REALTIME, &etime);
             etime.tv_sec += 2;
             if(pthread_mutex_timedlock(&parent -> mutex, &etime) == ETIMEDOUT){
+                pthread_mutex_unlock(&parent -> mutex);
                 printf("5\n");  
             } //데드락 발생위험
             if(parent -> right == child){
